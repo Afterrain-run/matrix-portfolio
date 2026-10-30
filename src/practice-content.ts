@@ -13,7 +13,7 @@ export const posterProjects: Record<Locale, Project> = {
     result:'已接入三种构图、三套配色、样例画廊、最多 20 步撤销、自动保存与恢复、配置导入导出及高清 PNG 导出。非法配置会被拒绝，不覆盖当前作品。',
     next:'计划进一步学习接口和数据库，让配置可以跨设备保存。当前版本没有后端、账号或云同步；文字外观也会受到设备字体的影响。',
     demoHint:'修改标题，试试轨道构图；关闭后重新打开，或刷新页面再打开，配置会恢复。',
-    reference:{label:'Canvas API / MDN',url:'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API',note:'在文件夹原有海报工具上接入并扩展，开发主要借助 AI。实现讲解用于学习与核对，不代表已经独立掌握所有技术。'},
+    reference:{label:'Canvas API / MDN',url:'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API',note:'在原有海报工具基础上接入并扩展；AI 辅助写代码，实现讲解对应的是能当场核对的代码行。'},
   },
   en: {
     id:'poster', number:'01', category:'experiment', name:'Poster Lab', year:'2026',
@@ -86,7 +86,7 @@ export const practiceCopy = {
    ['长期','前后端都懂一点','前端在课程系统，后端在评测后台补 C++ / Linux；目标是能独立定位一次“提交很慢”的链路问题。']
   ],
   contributionTitle:'关于 AI 辅助，我把话说清楚',
-  contribution:'这些作品的第一版大量借助 AI 生成。我的做法是：让 AI 出方案，我来拆解、验证、修改，并保证每个说法都能在代码或命令里对上。AI 让我在大一就能做出完整的东西；能不能留下，取决于我能不能解释它、改对它。',
+  contribution:'这些作品的第一版由 AI 辅助产出。我的做法是：让 AI 出方案，我来拆解、验证、修改，并保证每个说法都能在代码或命令里对上。AI 让我在大一就能做出完整的东西，而解释和修改由我负责。',
   info:'投递：recruit@matrix.moe，标题「Matrix招新简历-前端-2026级-计算机学院-姓名」，附件放 PDF 简历；招新交流群 878822270。邮件里我会附上仓库地址与 3 分钟演示步骤。',
   applicationLabel:'加入 Matrix 的学习与交付计划', open:'体验海报工具'
  },
