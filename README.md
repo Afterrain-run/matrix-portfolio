@@ -45,6 +45,20 @@ npm run build  # 构建到 dist/
 
 `vite.config.ts` 已设置 `base: './'`，因此项目页（`/<仓库名>/`）与自定义域名都能直接打开。
 
+## PDF 简历
+
+联系区提供「PDF 简历」下载，文件是仓库内的 `public/resume-cn.pdf`，内容由页面的打印排版（`@media print`）生成。修改文案后重新生成（需要本机安装 Chrome 或 Edge）：
+
+```bash
+npm run build
+npx vite preview --port 4173 --strictPort
+# 另开一个终端：
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new --disable-gpu \
+  --no-pdf-header-footer --print-to-pdf="public\resume-cn.pdf" "http://localhost:4173/"
+```
+
+生成后确认 2 页以内、中文没有乱码，再提交。
+
 ## 目录
 
 | 路径 | 用途 |
@@ -67,4 +81,4 @@ npm run build  # 构建到 dist/
 
 海报工具来自本人的本地项目并继续扩展；Wayfinder、Margin、Cutroom 为交互练习，分别参考 [Screenity](https://screenity.io/)、[cmdk](https://github.com/dip/cmdk) 与 [Slidev](https://sli.dev/guide/why)，不代表参考产品作者或其成果。字体许可保留在 `public/fonts/`。
 
-第一版实现大量借助 AI 生成，作者负责拆解、验证、修改与解释；这一点写在页面的「关于 AI 辅助」区块里，不回避。
+实现过程中使用 AI 辅助查文档、生成样板代码与排查问题；架构、拆分、调试与最终取舍由本人完成，页面「关于 AI 辅助」区块对此有说明。
