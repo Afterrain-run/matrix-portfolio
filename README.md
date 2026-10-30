@@ -2,7 +2,7 @@
 
 中山大学计算机学院 2026 级本科生的个人作品集，同时是一份面向 [Matrix](https://matrix.sysu.edu.cn) 前端方向的申请材料。使用 React、TypeScript、Vite 与 Canvas 构建，中英双语，可打印为 PDF 简历。
 
-线上地址：部署到 GitHub Pages 后填写（`https://<用户名>.github.io/<仓库名>/`）。
+线上地址：https://afterrain-run.github.io/matrix-portfolio/
 
 ## 这份作品集想说明什么
 
@@ -72,7 +72,7 @@ npx vite preview --port 4173 --strictPort
 
 ## 待本人补充
 
-- `src/profile.ts` 中的 GitHub 地址与个人邮箱（留空时页面显示 Matrix 投递信息，不会出现死链）。
+- `src/profile.ts` 中的个人邮箱（留空时联系区显示 Matrix 投递邮箱）。
 - 若更换姓名或学院信息，修改 `src/content.ts` 中的 `name` / `role` / `history`。
 
 ## 实现边界与来源

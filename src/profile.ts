@@ -2,7 +2,7 @@
 export const profile = {
   name: 'Afterrain',
   // 例如 https://github.com/<用户名>/afterrain-portfolio ；留空时页面显示文字说明而不是死链。
-  github: '',
+  github: 'https://github.com/Afterrain-run/matrix-portfolio',
   // 个人邮箱（可留空，留空时联系区只显示 Matrix 投递邮箱与交流群）。
   email: '',
   matrixEmail: 'recruit@matrix.moe',
