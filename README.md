@@ -20,7 +20,7 @@
 - **Wayfinder**：命令搜索、键盘导航、空态与禁用状态，兼容中文输入法组合输入。
 - **Margin**：受限 Markdown 编辑与演示预览。
 - **Cutroom**：片段审阅界面原型，使用本地示例画面。
-- **能力证据**（`#evidence`）与 **Matrix 申请页**（`#matrix`）：证据清单、课程系统问题观察、30/60/90 计划、投递方式。
+- **Matrix 申请页**（#matrix）：课程系统问题观察、30/60/90 计划、投递方式。
 
 ## 本地运行
 
@@ -64,9 +64,9 @@ npx vite preview --port 4173 --strictPort
 | 路径 | 用途 |
 | --- | --- |
 | `src/content.ts` | 主文案、4 个项目案例、个人信息 |
-| `src/practice-content.ts` | 海报案例、实现讲解、开发记录、能力证据与 Matrix 申请内容 |
+| src/practice-content.ts | 海报案例、实现讲解、开发记录与 Matrix 申请内容 |
 | `src/profile.ts` | GitHub 地址、投递邮箱、邮件标题等可配置项 |
-| `src/PracticeSections.tsx` | 能力证据、实现笔记、开发记录、Matrix 申请四个区块 |
+| src/PracticeSections.tsx | 实现笔记、开发记录、Matrix 申请三个区块 |
 | `src/PosterLab.tsx` / `src/poster-model.ts` / `src/poster-render.ts` | 海报工具界面、配置与校验、Canvas 绘制 |
 | `tests/` | 单元测试（40 项） |
 

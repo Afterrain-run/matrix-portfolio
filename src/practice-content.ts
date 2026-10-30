@@ -47,23 +47,10 @@ export const practiceCopy = {
   noteFooter:'打开工具，沿着参数、状态和画布这条链路，验证上面的实现。',
   logTitle:'每一次迭代，都留下依据', logSubtitle:'记录项目变化，也记录 AI 与我的分工。',
   log:[
-   {date:'2026.10.30',tag:'已实现',title:'补上“可被验证”的那一半',body:'接入 GitHub Actions 与 Pages 部署配置，补单元测试与构建检查；把能力写成可核对的证据清单，而不是形容词。',evidence:'可验证：推送后 Actions 依次跑 tsc --noEmit、40 项单元测试与 vite build。'},
-   {date:'2026.10.30',tag:'已整理',title:'把申请材料做成一个页面',body:'重写首页定位，新增能力证据与 Matrix 申请页：三个具体的使用问题、分阶段计划、投递方式。',evidence:'可验证：对比改动前后的章节；每条说法都能在仓库、命令或演示里找到对应。'},
+   {date:'2026.10.30',tag:'已实现',title:'补上“可被验证”的那一半',body:'接入 GitHub Actions 与 Pages 部署配置，补单元测试与构建检查；把实现写成能对着代码核对的说明，而不是形容词。',evidence:'可验证：推送后 Actions 依次跑 tsc --noEmit、40 项单元测试与 vite build。'},
+   {date:'2026.10.30',tag:'已整理',title:'把申请材料做成一个页面',body:'重写首页定位，新增 Matrix 申请页：三个具体的使用问题、分阶段计划、投递方式。',evidence:'可验证：对比改动前后的章节；每条说法都能在仓库、命令或演示里找到对应。'},
    {date:'下一步',tag:'待实践',title:'由我独立完成一次代码修改',body:'把滑块连续拖动合并成一步撤销，自己写测试、自己提 PR，并在面试时讲清楚为什么这样改。',evidence:'完成后再补：提交记录、测试用例与取舍说明。'}
   ],
-  evidence:{
-   kicker:'02 / EVIDENCE',
-   title:'能力证据，不是形容词',
-   lead:'投递前先自查：下面每一条都能在几分钟内被验证，也欢迎现场抽查。',
-   items:[
-    {index:'01',label:'仓库与 CI',title:'源码、提交记录与自动构建',body:'公开仓库放完整源码；每次推送触发 GitHub Actions，依次跑 TypeScript 检查、40 项单元测试和构建。',meta:'tsc · 40 tests · vite build',action:'repo'},
-    {index:'02',label:'产品',title:'Poster Lab：从输入到交付',body:'改标题、换构图、导出 1800 × 2400 PNG；关掉页面再打开草稿还在；配置能导出 JSON 再导入。',meta:'Canvas · 本地草稿 · PNG',action:'poster'},
-    {index:'03',label:'底层',title:'并行 C：MPI 与 Pthreads',body:'梯形积分、奇偶交换排序、向量乘法与广播用 MPI 写；互斥锁加和用 Pthreads 写。在 Linux 上编译运行，并和串行结果对拍。',meta:'C · MPI · Pthreads · Linux',action:''},
-    {index:'04',label:'课程视角',title:'C 语言期中复习答案册',body:'把程设课的易错题型按考点整理成答案册，标注易错点和验证方式，发给同班同学——这是我离课程系统用户最近的一次。',meta:'整理 · 校对 · 分发',action:''},
-    {index:'05',label:'交互质量',title:'键盘优先，边界写清楚',body:'命令菜单支持中英文搜索与上下键导航，禁用项说明原因；中文输入法组合输入时按 Enter 不会误执行。',meta:'Wayfinder · IME · 空态',action:''}
-   ],
-   footer:'仓库地址与测试命令会附在投递邮件里；演示步骤写在本页，任何人都能复现。'
-  },
   applicationTitle:'我为什么申请 Matrix，\n以及进来后能马上做什么',
   applicationIntro:'我用 Matrix 交程设作业，也在自己写小工具，所以对“课程系统哪里好用、哪里卡手”有具体体感。前端方向的三条要求——对 Web 开发有热情、会用 Git 协作、能在短周期内学会陌生技术——正好对应我过去两个月在做的事，而不是我打算去做的事。',
   facts:[
@@ -105,23 +92,10 @@ export const practiceCopy = {
   noteFooter:'Open the tool and verify this along the path from parameters to state to canvas.',
   logTitle:'Every iteration leaves evidence', logSubtitle:'Project changes, and how work was divided between AI and me.',
   log:[
-   {date:'2026.10.30',tag:'Shipped',title:'Adding the verifiable half',body:'Wired up GitHub Actions and Pages deployment, plus unit tests and a build check; rewrote capability claims as a checklist that can be checked rather than adjectives.',evidence:'Verifiable: a push runs tsc --noEmit, 40 unit tests and vite build in order.'},
-   {date:'2026.10.30',tag:'Reframed',title:'Turning the application into a page',body:'Rewrote the positioning, added an evidence section and a Matrix application page: three concrete user problems, a staged plan, and how to apply.',evidence:'Verifiable: compare the sections before and after; every claim maps to the repository, a command or a demo.'},
+   {date:'2026.10.30',tag:'Shipped',title:'Adding the verifiable half',body:'Wired up GitHub Actions and Pages deployment, plus unit tests and a build check; rewrote capability claims as statements that can be verified in the code.',evidence:'Verifiable: a push runs tsc --noEmit, 40 unit tests and vite build in order.'},
+   {date:'2026.10.30',tag:'Reframed',title:'Turning the application into a page',body:'Rewrote the positioning, added a Matrix application page: three concrete user problems, a staged plan, and how to apply.',evidence:'Verifiable: compare the sections before and after; every claim maps to the repository, a command or a demo.'},
    {date:'Next',tag:'To practise',title:'One code change, independently',body:'Coalesce rapid slider drags into a single undo step, write the tests myself, open my own pull request, and explain the trade-off in an interview.',evidence:'To be added: commits, test cases and reasoning.'}
   ],
-  evidence:{
-   kicker:'02 / EVIDENCE',
-   title:'Evidence, not adjectives',
-   lead:'Check it yourself: each item below can be verified in minutes, and is open to a live spot check.',
-   items:[
-    {index:'01',label:'Repository & CI',title:'Source, commit history, automated builds',body:'The public repository holds the full source; every push runs TypeScript checks, 40 unit tests and a production build in GitHub Actions.',meta:'tsc · 40 tests · vite build',action:'repo'},
-    {index:'02',label:'Product',title:'Poster Lab: from input to delivery',body:'Change the title, switch the composition, export a 1800 × 2400 PNG; close the page and the draft is still there; export and re-import the configuration as JSON.',meta:'Canvas · local draft · PNG',action:'poster'},
-    {index:'03',label:'Systems',title:'Parallel C: MPI and Pthreads',body:'Trapezoid integration, odd-even transposition sort, vector multiplication and broadcast in MPI; mutex-guarded summation in Pthreads. Compiled and run on Linux, results diffed against serial versions.',meta:'C · MPI · Pthreads · Linux',action:''},
-    {index:'04',label:'Course perspective',title:'C midterm review booklet',body:'Turned error-prone C exercises into a topic-indexed booklet with common mistakes and verification steps, and shared it with classmates. It is where I got closest to course-system users.',meta:'Organise · proofread · distribute',action:''},
-    {index:'05',label:'Interaction quality',title:'Keyboard first, edges made explicit',body:'The command menu searches Chinese and English, navigates with arrow keys and explains disabled items; pressing Enter during IME composition does not fire the action.',meta:'Wayfinder · IME · empty states',action:''}
-   ],
-   footer:'The repository URL and test commands go in the application email; the walkthrough is on this page, so anyone can reproduce it.'
-  },
   applicationTitle:'Why I am applying to Matrix,\nand what I can do from week one',
   applicationIntro:'I submit coursework through Matrix and build small tools of my own, so I have a concrete sense of where the course system works and where it gets in the way. The three frontend requirements — genuine interest in web development, using Git to collaborate, and learning unfamiliar technology quickly — match what I have already been doing these past two months, not what I plan to do.',
   facts:[
@@ -144,7 +118,7 @@ export const practiceCopy = {
    ['Longer term','Frontend and backend','Frontend in the course system, backend work in C++ / Linux on the judge; the goal is diagnosing a slow-submission path end to end.']
   ],
   contributionTitle:'About AI assistance, plainly',
-  contribution:'The first versions of these projects were generated largely with AI. My method: let AI propose, then I take it apart, verify it, change it, and make sure every claim matches code or a command. AI let a first-year student ship something complete; whether I stay depends on whether I can explain it and fix it.',
+  contribution:'The first versions were produced with AI assistance. My method: let AI propose, then I take it apart, verify it, change it, and make sure every claim matches code or a command. AI let me ship complete things in my first year; the explaining and fixing are mine.',
   info:'Apply to recruit@matrix.moe with the subject "Matrix招新简历-前端-2026级-计算机学院-姓名" and a PDF resume attached; recruitment group 878822270. I will include the repository URL and a three-minute walkthrough.',
   applicationLabel:'Learning and delivery plan for Matrix', open:'Open the poster tool'
  }
