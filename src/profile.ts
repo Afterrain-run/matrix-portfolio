@@ -1,12 +1,8 @@
-// 投递配置：部署或补充个人信息时只需要改这里。
+// 只填写已确认且愿意公开的个人信息。
 export const profile = {
   name: 'Afterrain',
-  // 例如 https://github.com/<用户名>/afterrain-portfolio ；留空时页面显示文字说明而不是死链。
   github: 'https://github.com/Afterrain-run/matrix-portfolio',
-  // 个人邮箱（可留空，留空时联系区只显示 Matrix 投递邮箱与交流群）。
+  // 留空显示“个人邮箱待补充”，不得用团队招新邮箱替代。
   email: '',
-  matrixEmail: 'recruit@matrix.moe',
-  matrixGroup: '878822270',
-  matrixSubject: 'Matrix招新简历-前端-2026级-计算机学院-姓名',
   matrixSite: 'https://matrix.sysu.edu.cn',
 };

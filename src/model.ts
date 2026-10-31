@@ -1,4 +1,5 @@
 import {practiceCopy} from './practice-content';
+import {profile} from './profile';
 import {copy, projects, type Category, type Locale, type Project} from './content';
 export function filterProjects(items:Project[], category:Category) {
  return category === 'all' ? items : items.filter(item => item.category === category);
@@ -6,7 +7,8 @@ export function filterProjects(items:Project[], category:Category) {
 export function buildResume(locale:Locale) {
  const c=copy[locale];
  return [
-  c.name+' / '+c.roman, c.role, c.statusNote, c.location, c.contact, '',
+  c.name+' / '+c.roman, c.role, c.statusNote, c.location, c.contact,
+  profile.email || (locale==='cn'?'个人邮箱待补充':'Personal email to be added'), profile.github, '',
   c.intro,'',c.selected,
   ...projects[locale].map(p => p.name+' — '+p.headline+'\n'+p.role+'\n'+p.summary+'\n'+p.result),
   '',c.experience,c.experienceNote,

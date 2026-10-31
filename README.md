@@ -1,84 +1,60 @@
-# Afterrain · Matrix 2026 申请作品集
+# Afterrain · UX/UI 学习作品集
 
-中山大学计算机学院 2026 级本科生的个人作品集，同时是一份面向 [Matrix](https://matrix.sysu.edu.cn) 前端方向的申请材料。使用 React、TypeScript、Vite 与 Canvas 构建，中英双语，可打印为 PDF 简历。
+大一学生的学习阶段作品集：以 UX/UI 与交互设计为方向，寒假计划入门计算机网络，争取大二加入 Matrix。项目主要借助 AI 完成；网站区分已实现功能、设计假设与未来计划，不将原型功能等同于个人独立掌握。
 
-线上地址：https://afterrain-run.github.io/matrix-portfolio/
+[在线作品集](https://afterrain-run.github.io/matrix-portfolio/)
 
-## 这份作品集想说明什么
+## 内容
 
-不是"我会很多技术"，而是四件可以被当场核对的事：
+- 四个可操作原型：Poster Lab、Wayfinder、Margin、Cutroom。
+- 海报设计分析：图片与配置导出、本机草稿恢复、样例替换。可切换任务与方案对照；用户测试尚未开展，方案示意未应用到工具。
+- 对应源码的交互实现讲解、AI 辅助记录、从现在到大二的学习路线。
+- 中英文、响应式、项目筛选、文本简历、打印排版及中文 PDF。
 
-1. **能做出可用的东西** —— Poster Lab 是一个完整的输入 → 预览 → 导出工具，断网也能用。
-2. **知道边界在哪** —— 每个项目都写了不做什么：没有后端、没有云同步、字体随设备变化。
-3. **有工程习惯** —— 40 项单元测试、TypeScript 检查、GitHub Actions 自动构建、按 PR 流程提交。
-4. **理解 Matrix 的用户** —— 作为课程系统的日常使用者，写了三个具体的改进提案和分阶段落地计划。
+海报工具包含文字与构图编辑、预览、最多 20 步撤销、本机配置保存、JSON 导入导出和 1800 × 2400 PNG 导出。页面与资源加载完成后，这些本地操作不依赖接口；未实现离线安装或首次断网访问保障。
 
-## 功能
+## 开发与检查
 
-- 中英文切换、项目分类筛选、项目案例弹窗、文本简历下载与打印排版。
-- **Poster Lab**：三种构图与配色、随机种子、撤销、本地草稿恢复、JSON 配置导入导出和 1800 × 2400 PNG 导出。
-- **Wayfinder**：命令搜索、键盘导航、空态与禁用状态，兼容中文输入法组合输入。
-- **Margin**：受限 Markdown 编辑与演示预览。
-- **Cutroom**：片段审阅界面原型，使用本地示例画面。
-- **Matrix 申请页**（#matrix）：课程系统问题观察、30/60/90 计划、投递方式。
+使用 Node.js 22.12+；CI 使用 Node.js 22。依次运行：
 
-## 本地运行
+    npm ci
+    npm run dev
 
-需要 Node.js 20.19+ 或 22.12+（CI 使用 Node.js 22）。
+提交前运行：
 
-```bash
-npm ci
-npm run dev
-```
+    npm run check
+    npm test
+    npm run build
 
-```bash
-npm test        # 单元测试（vitest）
-npm run check  # TypeScript 检查
-npm run build  # 构建到 dist/
-```
+当前 40 项单元测试覆盖内容与导出、筛选、几何、命令模型、解析器、渲染结构和海报配置。海报模型测试为 6 项。测试不替代用户验证。
 
-## 部署到 GitHub Pages
+## 部署与简历
 
-仓库内置 `.github/workflows/deploy.yml`：推送到 `main` 后自动跑测试与构建，并把 `dist/` 发布到 Pages。
+推送到 main 后，GitHub Actions 工作流运行测试、构建并发布 dist/ 到 Pages。Pages 来源应为 GitHub Actions。Vite 使用相对资源路径，适配仓库子路径。
 
-首次使用需要在仓库 **Settings → Pages → Build and deployment → Source** 选择 **GitHub Actions**，之后每次推送都会自动更新。
+中文 PDF 位于 public/resume-cn.pdf，来自页面的打印视图。修改简历后，打开本地开发页，切到中文，选择“打印简历 / 另存 PDF”，关闭浏览器页眉页脚，采用 A4 并检查分页。保存到原路径后重新构建，使 dist/ 包含新 PDF。英文页面明确标注固定下载为中文；英文内容可通过英文页面打印或文本下载取得。
 
-`vite.config.ts` 已设置 `base: './'`，因此项目页（`/<仓库名>/`）与自定义域名都能直接打开。
-
-## PDF 简历
-
-联系区提供「PDF 简历」下载，文件是仓库内的 `public/resume-cn.pdf`，内容由页面的打印排版（`@media print`）生成。修改文案后重新生成（需要本机安装 Chrome 或 Edge）：
-
-```bash
-npm run build
-npx vite preview --port 4173 --strictPort
-# 另开一个终端：
-"C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new --disable-gpu \
-  --no-pdf-header-footer --print-to-pdf="public\resume-cn.pdf" "http://localhost:4173/"
-```
-
-生成后确认 2 页以内、中文没有乱码，再提交。
-
-## 目录
+## 主要文件
 
 | 路径 | 用途 |
 | --- | --- |
-| `src/content.ts` | 主文案、4 个项目案例、个人信息 |
-| src/practice-content.ts | 海报案例、实现讲解、开发记录与 Matrix 申请内容 |
-| `src/profile.ts` | GitHub 地址、投递邮箱、邮件标题等可配置项 |
-| src/PracticeSections.tsx | 实现笔记、开发记录、Matrix 申请三个区块 |
-| `src/PosterLab.tsx` / `src/poster-model.ts` / `src/poster-render.ts` | 海报工具界面、配置与校验、Canvas 绘制 |
-| `tests/` | 单元测试（40 项） |
+| src/content.ts | 双语介绍与案例 |
+| src/UXStudy.tsx | 设计分析、方案对照与试用计划 |
+| src/practice-content.ts | 技术说明、开发记录与学习路线 |
+| src/profile.ts | 已确认的个人信息与公开链接 |
+| src/PrintResume.tsx | 双语打印摘要 |
+| src/model.ts | 筛选与文本简历 |
+| src/PosterLab.tsx、src/poster-model.ts、src/poster-render.ts | 海报界面、配置与绘制 |
+| docs/ | 学习计划、申请准备与试用记录模板 |
 
 ## 待本人补充
 
-- `src/profile.ts` 中的个人邮箱（留空时联系区显示 Matrix 投递邮箱）。
-- 若更换姓名或学院信息，修改 `src/content.ts` 中的 `name` / `role` / `history`。
+个人邮箱、学院、专业、可投入时间，以及实际完成的设计、试用、迭代和协作记录。邮箱留空时显示待补充，不使用团队招新邮箱替代。姓名与账号使用现有 Afterrain 信息。
 
-## 实现边界与来源
+## 来源与边界
 
-浏览器本地应用，没有后端、账号或云同步。海报草稿保存在当前浏览器，清理浏览器数据会删除草稿，可导出 JSON 备份。Cutroom 不包含真实视频处理，Margin 不是通用 Markdown 执行环境。
+Poster Lab 在原有本地海报工具上扩展；Cutroom 参考 Screenity 的流程，Wayfinder 参考 cmdk 的命令菜单模式，Margin 参考 Slidev 的内容与演示分离。对应链接在各案例中保留，不将参考产品作者的作品或成绩归属于候选人。字体许可保留在 public/fonts/。
 
-海报工具来自本人的本地项目并继续扩展；Wayfinder、Margin、Cutroom 为交互练习，分别参考 [Screenity](https://screenity.io/)、[cmdk](https://github.com/dip/cmdk) 与 [Slidev](https://sli.dev/guide/why)，不代表参考产品作者或其成果。字体许可保留在 `public/fonts/`。
+没有后端、账号或云同步。草稿仅保存在当前浏览器，撤销历史不跨会话，清理数据可能删除草稿。Cutroom 不处理真实视频；Margin 是受限文本解析器；前端禁用不构成服务端权限控制。
 
-实现过程中使用 AI 辅助查文档、生成样板代码与排查问题；架构、拆分、调试与最终取舍由本人完成，页面「关于 AI 辅助」区块对此有说明。
+实现、设计分析、文案更新与验证主要由 AI 辅助完成。独立贡献由本人实际经历补充。Matrix 的方向与要求以投递时官方信息为准。

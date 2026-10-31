@@ -5,13 +5,13 @@ export const posterProjects: Record<Locale, Project> = {
     id:'poster', number:'01', category:'experiment', name:'Poster Lab', year:'2026',
     headline:'让一个想法，变成一张可以带走的海报',
     summary:'编辑文字与构图，保存创作配置，导出高清图片。一个从输入到交付的浏览器小工具。',
-    context:'主项目 / AI 辅助开发 / 浏览器本地运行', role:'React 状态、Canvas 绘制、配置持久化与导出',
+    context:'主项目 / AI 辅助开发 / 浏览器本地运行', role:'AI 辅助原型 / 参数编辑、状态反馈与文件导出',
     tags:['CANVAS','LOCAL DRAFT','PNG EXPORT'],
     problem:'制作一张简单海报，常常需要反复调整文字、配色和构图。这个工具将创作过程收敛为少量可调整的参数，并保留配置，方便下一次继续编辑。',
     decision:'把配置作为唯一的数据来源。预览和导出使用同一个绘制函数；保存文字、配色、密度与随机种子，才能完整恢复创作状态。配置仅保存在当前浏览器，也可以导出 JSON 备份。',
     architecture:['React 配置与撤销历史','带种子的 Canvas 绘制','版本化 JSON 与本地草稿','1800 × 2400 PNG 导出'],
     result:'已接入三种构图、三套配色、样例画廊、最多 20 步撤销、自动保存与恢复、配置导入导出及高清 PNG 导出。非法配置会被拒绝，不覆盖当前作品。',
-    next:'计划进一步学习接口和数据库，让配置可以跨设备保存。当前版本没有后端、账号或云同步；文字外观也会受到设备字体的影响。',
+    next:'下一步优先验证导出含义、草稿提示和移动端编辑流程。当前版本没有后端、账号或云同步；文字外观也会受到设备字体的影响。',
     demoHint:'修改标题，试试轨道构图；关闭后重新打开，或刷新页面再打开，配置会恢复。',
     reference:{label:'Canvas API / MDN',url:'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API',note:'在原有海报工具基础上接入并扩展；AI 辅助写代码，实现讲解对应的是能当场核对的代码行。'},
   },
@@ -19,107 +19,305 @@ export const posterProjects: Record<Locale, Project> = {
     id:'poster', number:'01', category:'experiment', name:'Poster Lab', year:'2026',
     headline:'Turn an idea into a poster you can keep',
     summary:'Edit the text and composition, keep the configuration and export a high-resolution image. A small browser tool with a complete workflow.',
-    context:'Featured project / AI-assisted development / Local browser tool', role:'React state, Canvas rendering, persistence and export',
+    context:'Featured project / AI-assisted development / Local browser tool', role:'AI-assisted prototype / Parameter editing, feedback and file export',
     tags:['CANVAS','LOCAL DRAFT','PNG EXPORT'],
     problem:'A simple poster often involves repeated changes to text, color and composition. This tool reduces that process to a few parameters and preserves them for the next editing session.',
     decision:'Configuration is the single source of truth. Preview and export share one renderer. Text, colors, density and seed are saved together. Drafts stay in this browser; JSON export provides a portable backup.',
     architecture:['React configuration and undo','Seeded Canvas rendering','Versioned JSON and local draft','1800 × 2400 PNG export'],
     result:'Includes three layouts, three palettes, a sample gallery, up to 20 undo steps, automatic local recovery, JSON import/export and PNG export. Invalid configurations are rejected without replacing the current work.',
-    next:'Learn APIs and databases to save configurations across devices. This version has no backend, accounts or cloud sync; text appearance also depends on device fonts.',
+    next:'Next, validate export labels, draft feedback and the mobile editing flow. This version has no backend, accounts or cloud sync; text appearance also depends on device fonts.',
     demoHint:'Change the title and try Orbit. Close and reopen, or refresh and reopen, to restore the configuration.',
     reference:{label:'Canvas API / MDN',url:'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API',note:'Integrated and extended from the existing local poster tool, primarily with AI assistance. The implementation notes support study and verification; they do not claim independent mastery.'},
   },
 };
 
 export const practiceCopy = {
- cn: {
-  title:'从界面，走进实现', subtitle:'以海报工具为例，拆开一次操作背后的过程。',
-  steps:[
-   ['01','输入','标题、副标题与署名先进入受控输入，等待一次明确的提交动作，不会边打字边重绘画布。'],
-   ['02','状态','参数更新、模板切换与渲染结果都写入同一个 reducer，避免界面、画布和导出各自为政。'],
-   ['03','绘制','画布按固定尺寸与像素比绘制，导出前先在离屏画布上完整重绘一次，再转成 PNG。']
-  ],
-  notes:[
-   {title:'一份配置，一个数据源',body:'标题、配色、构图、密度与随机种子都放在同一个 PosterConfig 里；界面只是它的投影，不是另一份真相。',code:'const next = {...state.config, title: value.trim()};\ndispatch({type: \'update\', config: next});',question:'如果标题被清空，是回退默认值还是允许空？我选择回退默认值并给出提示，因为空标题导出就是一张废图。'},
-   {title:'预览与导出共用同一条绘制路径',body:'preview 和 export 都调用 drawPoster，只是尺寸和像素比不同。少一套逻辑，就少一类“预览好看、导出错位”的问题。',code:'drawPoster(ctx, config, 1800, 2400);',question:'为什么不在导出时另写一个函数？因为两套布局代码一定会慢慢分叉，最后没人说得清哪个才是对的。'},
-   {title:'失败要看得见',body:'解析配置、导入 JSON、绘制异常都走 validateConfig 与 try/catch；出错时保留旧画面，把状态写进界面，而不是点了没反应。',code:'try { drawPoster(ctx, parseConfig(text), 900, 1200); }\ncatch { setStatus(\'error\'); }',question:'静默失败和明确报错，对用户来说差别有多大？前者会让人怀疑自己，后者只让人知道下一步做什么。'}
-  ],
-  noteFooter:'打开工具，沿着参数、状态和画布这条链路，验证上面的实现。',
-  logTitle:'每一次迭代，都留下依据', logSubtitle:'记录项目变化，也记录 AI 与我的分工。',
-  log:[
-   {date:'2026.10.30',tag:'已实现',title:'补上“可被验证”的那一半',body:'接入 GitHub Actions 与 Pages 部署配置，补单元测试与构建检查；把实现写成能对着代码核对的说明，而不是形容词。',evidence:'可验证：推送后 Actions 依次跑 tsc --noEmit、40 项单元测试与 vite build。'},
-   {date:'2026.10.30',tag:'已整理',title:'把申请材料做成一个页面',body:'重写首页定位，新增 Matrix 申请页：三个具体的使用问题、分阶段计划、投递方式。',evidence:'可验证：对比改动前后的章节；每条说法都能在仓库、命令或演示里找到对应。'},
-   {date:'下一步',tag:'待实践',title:'由我独立完成一次代码修改',body:'把滑块连续拖动合并成一步撤销，自己写测试、自己提 PR，并在面试时讲清楚为什么这样改。',evidence:'完成后再补：提交记录、测试用例与取舍说明。'}
-  ],
-  applicationTitle:'我为什么申请 Matrix，\n以及进来后能马上做什么',
-  applicationIntro:'我用 Matrix 交程设作业，也在自己写小工具，所以对“课程系统哪里好用、哪里卡手”有具体体感。前端方向的三条要求——对 Web 开发有热情、会用 Git 协作、能在短周期内学会陌生技术——正好对应我过去两个月在做的事，而不是我打算去做的事。',
-  facts:[
-   ['申请方向','前端（可接受后端服务端 / 评测后台）'],
-   ['年级专业','2026 级 · 计算机学院（本科）'],
-   ['可投入时间','学期每周 ≥ 10 小时，寒暑假可全勤参与线上开发'],
-   ['现在能上手','React 页面与组件、Canvas、响应式与打印、Git 与 PR 流程']
-  ],
-  observationsTitle:'作为用户，我看到的三个小问题',
-  observations:[
-   {tag:'课程系统',title:'做作业时看不到截止时间',body:'我常在做题页切回列表确认 DDL。可以在做题页常驻一条“剩余时间 + 提交状态”，并在 DDL 前 24 / 48 小时做渐进提醒。改动很小，但每天都会用到。'},
-   {tag:'评测结果',title:'WA 之后不知道该查什么',body:'评测报告给了用例结果，却不给排查路径。可以做“常见错误 → 建议检查项”的映射（数组越界、变量未初始化、多组数据没清空），放在失败结果下面。'},
-   {tag:'考试系统',title:'第一次线上考试的紧张来自“不知道界面”',body:'给一个 60 秒的模拟考试入口：倒计时、交卷确认、断网提示各走一遍，不需要真实题目。降低首考焦虑，也减少考试当天的操作类提问。'}
-  ],
-  planTitle:'如果能进来，我打算这样开始',
-  plan:[
-   ['第 1 周','把系统跑起来','本地跑通课程系统前端，读路由和状态管理，记录 3 个能稳定复现的小问题。'],
-   ['第 2–4 周','接第一个 issue','在师兄带的范围内修一个页面 bug 或补一个空态，写清复现步骤，按规范提 PR 并跟完 review。'],
-   ['第 2 个月','独立负责一个小模块','从设计稿到上线独立完成一个模块，补测试、写取舍；同时补 Go 与后端基础。'],
-   ['长期','前后端都懂一点','前端在课程系统，后端在评测后台补 C++ / Linux；目标是能独立定位一次“提交很慢”的链路问题。']
-  ],
-  contributionTitle:'关于 AI 辅助，我把话说清楚',
-  contribution:'这些作品的第一版由 AI 辅助产出。我的做法是：让 AI 出方案，我来拆解、验证、修改，并保证每个说法都能在代码或命令里对上。AI 让我在大一就能做出完整的东西，而解释和修改由我负责。',
-  info:'投递：recruit@matrix.moe，标题「Matrix招新简历-前端-2026级-计算机学院-姓名」，附件放 PDF 简历；招新交流群 878822270。邮件里我会附上仓库地址与 3 分钟演示步骤。',
-  applicationLabel:'加入 Matrix 的学习与交付计划', open:'体验海报工具'
- },
- en: {
-  title:'From interface to implementation', subtitle:'A poster tool, opened up: what one action actually sets off.',
-  steps:[
-   ['01','Input','Title, subtitle and signature enter controlled inputs and wait for an explicit commit; typing never redraws the canvas.'],
-   ['02','State','Parameter updates, template switches and render results all go through one reducer, so UI, canvas and export cannot disagree.'],
-   ['03','Draw','The canvas draws at a fixed size and pixel ratio; export performs one full redraw on an offscreen canvas before encoding to PNG.']
-  ],
-  notes:[
-   {title:'One configuration, one source of truth',body:'Title, palette, layout, density and seed all live in one PosterConfig. The interface is a projection of it, not a second truth.',code:'const next = {...state.config, title: value.trim()};\ndispatch({type: \'update\', config: next});',question:'Should an emptied title fall back to the default or stay empty? I fall back and show a hint, because an empty title exports a broken poster.'},
-   {title:'Preview and export share one draw path',body:'Preview and export both call drawPoster with different sizes and pixel ratios. One path means one class of “looks right, exports offset” bugs disappears.',code:'drawPoster(ctx, config, 1800, 2400);',question:'Why not a separate export function? Because two layout implementations drift apart until nobody can say which one is correct.'},
-   {title:'Failures must be visible',body:'Parsing, JSON import and drawing all go through validateConfig and try/catch. On failure the previous frame stays and the status surfaces in the UI instead of nothing happening.',code:'try { drawPoster(ctx, parseConfig(text), 900, 1200); }\ncatch { setStatus(\'error\'); }',question:'How much does silent failure versus an explicit error matter? One makes users doubt themselves, the other tells them what to do next.'}
-  ],
-  noteFooter:'Open the tool and verify this along the path from parameters to state to canvas.',
-  logTitle:'Every iteration leaves evidence', logSubtitle:'Project changes, and how work was divided between AI and me.',
-  log:[
-   {date:'2026.10.30',tag:'Shipped',title:'Adding the verifiable half',body:'Wired up GitHub Actions and Pages deployment, plus unit tests and a build check; rewrote capability claims as statements that can be verified in the code.',evidence:'Verifiable: a push runs tsc --noEmit, 40 unit tests and vite build in order.'},
-   {date:'2026.10.30',tag:'Reframed',title:'Turning the application into a page',body:'Rewrote the positioning, added a Matrix application page: three concrete user problems, a staged plan, and how to apply.',evidence:'Verifiable: compare the sections before and after; every claim maps to the repository, a command or a demo.'},
-   {date:'Next',tag:'To practise',title:'One code change, independently',body:'Coalesce rapid slider drags into a single undo step, write the tests myself, open my own pull request, and explain the trade-off in an interview.',evidence:'To be added: commits, test cases and reasoning.'}
-  ],
-  applicationTitle:'Why I am applying to Matrix,\nand what I can do from week one',
-  applicationIntro:'I submit coursework through Matrix and build small tools of my own, so I have a concrete sense of where the course system works and where it gets in the way. The three frontend requirements — genuine interest in web development, using Git to collaborate, and learning unfamiliar technology quickly — match what I have already been doing these past two months, not what I plan to do.',
-  facts:[
-   ['Track','Frontend (also open to backend / judge admin)'],
-   ['Year & major','Class of 2026 · Computer Science, undergraduate'],
-   ['Time available','≥ 10 hours per week in term; full-time online in vacations'],
-   ['Can start on','React pages and components, Canvas, responsive and print, Git and pull requests']
-  ],
-  observationsTitle:'Three small problems I hit as a user',
-  observations:[
-   {tag:'Course system',title:'The deadline disappears while I work',body:'I keep switching back to the list to confirm the deadline. A persistent “time left + submission status” strip on the problem page, with progressive reminders at 24 and 48 hours, is a small change used every day.'},
-   {tag:'Judge results',title:'After a wrong answer, I do not know what to check',body:'The report lists case results but no debugging path. A “common mistake → what to check” mapping (out-of-bounds, uninitialised variables, uncleared state between test groups) under the failure would help.'},
-   {tag:'Exam system',title:'First-exam nerves come from not knowing the interface',body:'A 60-second mock exam entry that walks through the countdown, submit confirmation and disconnect warning, with no real questions, would reduce first-exam anxiety and the operational questions asked on exam day.'}
-  ],
-  planTitle:'If I join, this is how I would start',
-  plan:[
-   ['Week 1','Get it running locally','Run the course-system frontend locally, read the routing and state management, and log three reliably reproducible issues.'],
-   ['Weeks 2–4','Take a first issue','Fix one page bug or add one empty state within a mentor-scoped task, document reproduction steps, and open a pull request that follows the rules and the review.'],
-   ['Month 2','Own a small module','Deliver one module from design to release, with tests and written trade-offs, while building up Go and backend fundamentals.'],
-   ['Longer term','Frontend and backend','Frontend in the course system, backend work in C++ / Linux on the judge; the goal is diagnosing a slow-submission path end to end.']
-  ],
-  contributionTitle:'About AI assistance, plainly',
-  contribution:'The first versions were produced with AI assistance. My method: let AI propose, then I take it apart, verify it, change it, and make sure every claim matches code or a command. AI let me ship complete things in my first year; the explaining and fixing are mine.',
-  info:'Apply to recruit@matrix.moe with the subject "Matrix招新简历-前端-2026级-计算机学院-姓名" and a PDF resume attached; recruitment group 878822270. I will include the repository URL and a three-minute walkthrough.',
-  applicationLabel:'Learning and delivery plan for Matrix', open:'Open the poster tool'
- }
+  "cn": {
+    "title": "交互背后，代码如何响应",
+    "subtitle": "以下描述对应当前实现，帮助理解设计与技术的连接。",
+    "steps": [
+      [
+        "01 / INPUT",
+        "输入即更新",
+        "标题与副标题通过 onChange 更新配置，无需提交按钮。"
+      ],
+      [
+        "02 / STATE",
+        "记录配置",
+        "reducer 保存当前配置与最多 20 步撤销历史。"
+      ],
+      [
+        "03 / PREVIEW",
+        "即时预览",
+        "配置变化触发 Canvas 重绘，并尝试保存本地草稿。"
+      ],
+      [
+        "04 / EXPORT",
+        "导出结果",
+        "PNG 导出重新绘制大画布，JSON 导出保留可编辑配置。"
+      ]
+    ],
+    "notes": [
+      {
+        "title": "文字修改后，为什么预览立即变化？",
+        "body": "输入事件更新 PosterConfig；预览组件的 effect 监听配置变化，再调用 drawPoster。没有额外的提交动作，也没有署名输入项。",
+        "code": "onChange → update → dispatch\nconfig changes → effect → drawPoster",
+        "question": "设计关注：修改得到及时反馈，用户可以直接比较结果。"
+      },
+      {
+        "title": "清空标题时，目前会发生什么？",
+        "body": "输入框和配置允许空标题，绘制函数用 UNTITLED 作为显示回退；当前没有专门的空标题提示。是否允许无标题导出，需要结合创作任务验证。",
+        "code": "const lines = (title.trim() || 'UNTITLED').split('\\n').slice(0, 4);",
+        "question": "待验证：用户更希望保留空白、获得提醒，还是看到占位标题？"
+      },
+      {
+        "title": "恢复与导出，各自保留什么？",
+        "body": "本地草稿保存当前配置；撤销历史仅在本次会话保留。PNG 在 1800 × 2400 的新画布上重新绘制，JSON 保存文字、配色、构图、密度和种子。",
+        "code": "current config → localStorage / JSON\ndrawPoster(ctx, config, 1800, 2400) → PNG",
+        "question": "设计关注：图片适合分享，配置适合继续编辑，两者需要明确区分。"
+      },
+      {
+        "title": "哪些失败已有反馈？",
+        "body": "JSON 导入先校验版本、字段和范围，失败时不替换当前配置。存储失败与 PNG 导出失败有提示；预览绘制当前没有单独的异常恢复机制。",
+        "code": "parseConfig(file) → validate → update\ninvalid import → keep current configuration",
+        "question": "后续可以补充预览异常反馈，不能把它写成已经完成的能力。"
+      }
+    ],
+    "noteFooter": "实现说明不替代用户验证；原型的可用性仍需通过实际任务观察。",
+    "logTitle": "留下过程，也留下边界",
+    "logSubtitle": "记录本次实现变化，个人实践与研究结果另行补充。",
+    "log": [
+      {
+        "date": "2026.10.30",
+        "tag": "已有实现",
+        "title": "交互工具与发布流程",
+        "body": "已有海报工具和三个交互练习，保留测试、类型检查、GitHub Actions 与 Pages 配置。",
+        "evidence": "功能与工程配置可在源码中核对；不据此推断本人已具备团队协作经验。"
+      },
+      {
+        "date": "2026.10.31",
+        "tag": "已调整",
+        "title": "围绕 UX/UI 重新组织作品",
+        "body": "明确大二目标与寒假网络学习计划，纠正实现讲解和联系方式，增加海报工具的设计假设与验证计划。",
+        "evidence": "本次文案、设计分析与代码修改由 AI 辅助完成。"
+      },
+      {
+        "date": "下一步",
+        "tag": "待实践",
+        "title": "由本人开展一次小型可用性测试",
+        "body": "邀请自愿试用的同学完成导出、恢复与样例切换任务，记录停顿和误解，再选择一个问题制作改版。",
+        "evidence": "完成后补充真实观察、方案取舍及修改前后的结果，不预写成效。"
+      }
+    ],
+    "applicationTitle": "以 UX/UI 为方向，\n为大二的 Matrix 申请做准备。",
+    "applicationIntro": "当前重点是理解任务、组织界面信息、设计状态与反馈，并用原型表达方案。寒假计划入门计算机网络，让设计判断能考虑请求、等待、失败和恢复等实际约束。",
+    "facts": [
+      [
+        "当前阶段",
+        "大一 · UX/UI 学习中"
+      ],
+      [
+        "目标时间",
+        "争取大二加入 Matrix"
+      ],
+      [
+        "寒假重点",
+        "计算机网络入门与界面状态理解"
+      ],
+      [
+        "准备方式",
+        "设计案例、试用记录、可操作原型"
+      ]
+    ],
+    "observationsTitle": "校园工具研究题目 · 尚待验证",
+    "observations": [
+      {
+        "tag": "待观察 / 信息可见性",
+        "title": "截止时间与提交状态是否容易确认？",
+        "body": "先记录实际页面和任务，观察使用者是否需要来回查找。若存在问题，再比较固定信息栏与按需提示，不预设现有系统有缺陷。"
+      },
+      {
+        "tag": "待观察 / 错误反馈",
+        "title": "失败后，用户是否知道下一步？",
+        "body": "区分答案错误、编译失败与网络异常。验证提示是否说明已知事实、可采取的操作和未知结果；不把 WA 直接诊断为某一种代码错误。"
+      },
+      {
+        "tag": "待观察 / 首次使用",
+        "title": "首次操作是否需要练习入口？",
+        "body": "通过任务观察了解陌生步骤，再评估引导、说明或模拟练习的必要性。研究采用非真实考试内容，不预先宣称能降低焦虑。"
+      }
+    ],
+    "planTitle": "从现在到大二的准备路线",
+    "plan": [
+      [
+        "现在至寒假前",
+        "UI 与交互基础",
+        "练习视觉层级、信息架构、用户流程与线框稿，完成一个可点击原型。"
+      ],
+      [
+        "寒假",
+        "入门计算机网络",
+        "学习 DNS、TCP 基础、HTTPS 与 HTTP；用 Network 面板观察请求，设计加载、超时和断网状态。"
+      ],
+      [
+        "大一下学期与暑假",
+        "补齐设计案例",
+        "完成试用与迭代，整理两个能讲清楚的案例；尝试与开发者进行组件和状态交接。"
+      ],
+      [
+        "大二招新前",
+        "整理与申请",
+        "核对当年设计、产品及相关岗位要求，整理真实贡献、作品集与本人可投入时间。"
+      ]
+    ],
+    "contributionTitle": "AI 辅助与个人实践",
+    "contribution": "现有项目主要借助 AI 完成，本次设计分析和文案整理也有 AI 参与。当前展示的是原型与分析框架；本人独立完成的设计、访谈、修改和验证，将在实际完成后补充记录。",
+    "info": "学院专业、个人联系方式和可投入时间尚待本人确认。当前是准备阶段，正式申请时以 Matrix 当年的招新信息为准。",
+    "applicationLabel": "UX/UI 学习与 Matrix 准备计划",
+    "open": "体验海报工具"
+  },
+  "en": {
+    "title": "How the interface responds",
+    "subtitle": "Notes grounded in the current implementation, connecting interaction and technology.",
+    "steps": [
+      [
+        "01 / INPUT",
+        "Update as you type",
+        "Title and subtitle update configuration through onChange, without a submit button."
+      ],
+      [
+        "02 / STATE",
+        "Keep configuration",
+        "A reducer stores the current configuration and up to 20 undo steps."
+      ],
+      [
+        "03 / PREVIEW",
+        "Preview immediately",
+        "Configuration changes redraw Canvas and attempt to save a local draft."
+      ],
+      [
+        "04 / EXPORT",
+        "Keep the result",
+        "PNG redraws a larger canvas; JSON keeps the editable configuration."
+      ]
+    ],
+    "notes": [
+      {
+        "title": "Why does typing update the preview immediately?",
+        "body": "Input events update PosterConfig. The preview effect observes configuration changes and calls drawPoster. There is no extra submit step or signature field.",
+        "code": "onChange → update → dispatch\nconfig changes → effect → drawPoster",
+        "question": "Design concern: immediate feedback helps people compare changes."
+      },
+      {
+        "title": "What happens when the title is empty?",
+        "body": "The input and configuration allow an empty title. Rendering falls back to UNTITLED; there is no dedicated empty-title message. Whether a title should be required needs task-based validation.",
+        "code": "const lines = (title.trim() || 'UNTITLED').split('\\n').slice(0, 4);",
+        "question": "To validate: would people prefer a blank poster, a reminder or a placeholder?"
+      },
+      {
+        "title": "What do recovery and export preserve?",
+        "body": "The local draft stores the current configuration; undo history lasts for this session. PNG is redrawn at 1800 × 2400, while JSON keeps text, palette, layout, density and seed.",
+        "code": "current config → localStorage / JSON\ndrawPoster(ctx, config, 1800, 2400) → PNG",
+        "question": "Design concern: an image is for sharing; a configuration is for editing later."
+      },
+      {
+        "title": "Which failures already have feedback?",
+        "body": "JSON import validates version, fields and ranges before replacing the current configuration. Storage and PNG export failures show feedback. Preview rendering has no separate recovery mechanism yet.",
+        "code": "parseConfig(file) → validate → update\ninvalid import → keep current configuration",
+        "question": "Preview recovery is a future improvement, not a completed feature."
+      }
+    ],
+    "noteFooter": "Implementation notes do not replace usability validation through real tasks.",
+    "logTitle": "Keep the process visible",
+    "logSubtitle": "Implementation changes, with personal practice and research results documented separately.",
+    "log": [
+      {
+        "date": "2026.10.30",
+        "tag": "Implemented",
+        "title": "Interactive tools and publishing",
+        "body": "The poster tool and three interaction exercises include tests, type checks, GitHub Actions and Pages configuration.",
+        "evidence": "Code verifies the implementation; it does not establish personal collaboration experience."
+      },
+      {
+        "date": "2026.10.31",
+        "tag": "Reframed",
+        "title": "Organise the portfolio around UX/UI",
+        "body": "Clarified the year-two goal and winter networking plan, corrected technical notes and contact handling, and added design hypotheses and a validation plan.",
+        "evidence": "This update to content, analysis and code was AI-assisted."
+      },
+      {
+        "date": "Next",
+        "tag": "To practise",
+        "title": "Conduct a small usability session myself",
+        "body": "Invite willing classmates to export, restore and switch samples. Record pauses and misunderstandings, then prototype a change for one observed issue.",
+        "evidence": "Add real observations, tradeoffs and before/after results after completion."
+      }
+    ],
+    "applicationTitle": "Learn UX/UI now.\nPrepare for Matrix in year two.",
+    "applicationIntro": "My focus is understanding tasks, organising information, designing states and feedback, and expressing ideas with prototypes. During winter break I plan to study networking basics to understand requests, waiting, failure and recovery.",
+    "facts": [
+      [
+        "Stage",
+        "First-year student · Learning UX/UI"
+      ],
+      [
+        "Goal",
+        "Apply to Matrix in year two"
+      ],
+      [
+        "Winter focus",
+        "Networking basics and interface states"
+      ],
+      [
+        "Preparation",
+        "Design cases, usability notes and prototypes"
+      ]
+    ],
+    "observationsTitle": "Campus-tool research topics · Validation pending",
+    "observations": [
+      {
+        "tag": "To observe / Visibility",
+        "title": "Are deadlines and submission status easy to find?",
+        "body": "Document actual pages and tasks, then observe whether people need to search repeatedly. Compare persistent and contextual cues only if a problem is observed."
+      },
+      {
+        "tag": "To observe / Error feedback",
+        "title": "Does a failure explain the next step?",
+        "body": "Distinguish wrong answers, compilation failures and network errors. Check whether feedback describes known facts, available actions and uncertain results; a wrong answer does not diagnose one specific code bug."
+      },
+      {
+        "tag": "To observe / First use",
+        "title": "Would a practice entry help new users?",
+        "body": "Observe unfamiliar steps before evaluating onboarding or simulation. Use non-exam content and do not claim reduced anxiety before validation."
+      }
+    ],
+    "planTitle": "A path from now to year two",
+    "plan": [
+      [
+        "Before winter break",
+        "UI and interaction foundations",
+        "Practise hierarchy, information architecture, user flows and wireframes; build a clickable prototype."
+      ],
+      [
+        "Winter break",
+        "Networking fundamentals",
+        "Study DNS, TCP basics, HTTPS and HTTP. Inspect requests in Network tools and design loading, timeout and offline states."
+      ],
+      [
+        "Following term & summer",
+        "Complete design cases",
+        "Run usability sessions and iterate; prepare two explainable cases and practise component and state handoff with a developer."
+      ],
+      [
+        "Before year-two recruitment",
+        "Prepare an application",
+        "Check current design, product and related roles. Present verified contributions, the portfolio and actual availability."
+      ]
+    ],
+    "contributionTitle": "AI assistance and personal practice",
+    "contribution": "These projects were primarily built with AI assistance, including this design analysis and content update. The site currently presents prototypes and a study framework. Independently completed design, interviews, changes and validation will be documented as they happen.",
+    "info": "Department, major, personal contact and availability remain to be confirmed. This is a preparation-stage portfolio; check Matrix’s recruitment information when applying.",
+    "applicationLabel": "UX/UI learning and Matrix preparation",
+    "open": "Try Poster Lab"
+  }
 };
