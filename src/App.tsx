@@ -8,6 +8,7 @@ import {PracticeSections} from './PracticeSections';
 import {UXStudy} from './UXStudy';
 import {PrintResume} from './PrintResume';
 import {profile} from './profile';
+import {JournalHero,JournalImage,JournalMoodboard} from './JournalVisuals';
 
 function Arrow({diagonal=false}:{diagonal?:boolean}) {return <span aria-hidden="true">{diagonal?'↗':'↘'}</span>}
 export function App() {
@@ -65,7 +66,7 @@ export function App() {
    <div className="hero-actions"><a className="primary-action" href="#work">{c.viewWork}<Arrow/></a><button className="text-action" onClick={download}>{c.download}<span aria-hidden="true">↓</span></button></div>
    <p className="fiction-notice"><span aria-hidden="true">◌</span> {c.statusNote}</p>
   </div>
-  <Sculpture locale={locale}/>
+  <JournalHero locale={locale}/>
   <div className="hero-baseline"><span>{c.location}</span><span>DESIGN × CODE × CURIOSITY</span><a href="#work" aria-label={c.viewWork}>↓</a></div>
  </section>
  <section className="work-section section-shell" id="work" aria-labelledby="work-title">
@@ -80,11 +81,12 @@ export function App() {
    </article>)}
   </div>
  </section>
+ <JournalMoodboard locale={locale}/>
  <UXStudy locale={locale} onOpenPoster={()=>setSelected('poster')}/>
  <PracticeSections locale={locale} onOpenPoster={()=>setSelected('poster')}/>
  <section className="about-section section-shell" aria-labelledby="about-title">
-  <div className="about-left"><p className="section-kicker">06 / {c.aboutLabel}</p><h2 id="about-title">{c.aboutTitle[0]}<br/><span>{c.aboutTitle[1]}</span></h2><p className="about-body">{c.aboutBody}</p><div className="about-stamp" aria-hidden="true"><span>THINK</span><b>✳</b><span>MAKE</span></div></div>
-  <div className="principles">{c.principles.map(p=><div key={p[0]}><span>{p[0]}</span><div><h3>{p[1]}</h3><p>{p[2]}</p></div></div>)}</div>
+  <div className="about-left"><p className="section-kicker">06 / {c.aboutLabel}</p><h2 id="about-title">{c.aboutTitle[0]}<br/><span>{c.aboutTitle[1]}</span></h2><p className="about-body">{c.aboutBody}</p><div className="about-stamp" aria-hidden="true"><span>THINK</span><b>✳</b><span>MAKE</span></div><figure className="journal-about-art" aria-hidden="true"><JournalImage name="06-cover"/></figure></div>
+  <div className="principles">{c.principles.map(p=><div key={p[0]}><span>{p[0]}</span><div><h3>{p[1]}</h3><p>{p[2]}</p></div></div>)}<details className="journal-experiment"><summary>{locale==='cn'?'交互小实验 / 探索线框形态':'Interactive experiment / Explore a wire form'} <span aria-hidden="true">＋</span></summary><Sculpture locale={locale}/></details></div>
  </section>
  <section className="experience-section section-shell" id="experience" aria-labelledby="experience-title">
   <div className="section-heading"><div><p className="section-kicker">07 / THE JOURNEY</p><h2 id="experience-title">{c.experience}</h2></div><p>{c.experienceNote}</p></div>
@@ -93,6 +95,7 @@ export function App() {
   <div className="education"><h3>{c.education}</h3><div><p>{c.educationText}</p><p>{c.educationExtra}</p></div></div>
  </section>
  <section className="contact-section section-shell" id="contact" aria-labelledby="contact-title">
+  <div className="journal-contact-art" aria-hidden="true"><JournalImage name="05-letter"/></div>
   <p className="section-kicker">08 / WHAT'S NEXT?</p><div className="contact-layout"><div><h2 id="contact-title">{c.contactTitle[0]}<br/><span>{c.contactTitle[1]}</span><span className="contact-star" aria-hidden="true">✳</span></h2><p>{c.contactBody}</p></div><div className="contact-details"><div className="contact-email">{profile.email?<a href={`mailto:${profile.email}`}>{profile.email}</a>:<span>{locale==='cn'?'个人邮箱待补充':'Personal email to be added'}</span>}</div>{profile.github&&<a className="contact-repo" href={profile.github} target="_blank" rel="noreferrer">GitHub · {profile.github.replace(/^https?:\/\/(www\.)?/,'')} ↗</a>}<button className="primary-action" onClick={copyLink}>{c.copyLink}<span aria-hidden="true">↗</span></button><p>{c.contactNote}</p><div className="resume-actions"><a className="resume-pdf" href="./resume-cn.pdf" download="Afterrain-UXUI-学习作品集.pdf" aria-label={locale==='cn'?'下载 PDF 简历':'Download Chinese PDF resume'}>{locale==='cn'?'PDF 简历':'PDF resume (Chinese)'} ↓</a><button onClick={download}>{c.download} ↓</button><button onClick={()=>window.print()}>{c.print} ↗</button></div></div></div>
  </section>
  </main>

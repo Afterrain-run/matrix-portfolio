@@ -43,7 +43,7 @@ export function Sculpture({locale}:{locale:Locale}) {
    paths.sort((p,q)=>p.z-q.z).forEach(p=>{
     ctx.beginPath();p.points.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));
     const intensity=Math.max(.08,Math.min(.83,p.alpha+(p.z+1)*.25));
-    ctx.strokeStyle='rgba(131,244,203,'+intensity+')';ctx.lineWidth=.65;ctx.stroke();
+    ctx.strokeStyle='rgba(61,104,139,'+intensity+')';ctx.lineWidth=.65;ctx.stroke();
    });
   }
   paint.current=draw;
